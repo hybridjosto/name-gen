@@ -1,11 +1,12 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2025 Josh Stockwell <josh.stockwell@gmail.com>
 */
 package main
 
-import "github.com/hybridjosto/namegen-go/cmd"
+import (
+	"github.com/hybridjosto/namegen-go/ui"
+)
 
 func main() {
-	cmd.Execute()
+	ui.RunMaxMode()
 }
