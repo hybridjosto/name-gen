@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	"os"
+	"slices"
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -20,12 +21,7 @@ type model struct {
 }
 
 func contains(slice []string, item string) bool {
-	for _, s := range slice {
-		if s == item {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(slice, item)
 }
 
 func initialModel() model {
@@ -45,10 +41,7 @@ var tableStyle = lipgloss.NewStyle().
 	Height(10) // change based on your layout
 
 func renderTable(names []string, scroll int, height int) string {
-	end := scroll + height
-	if end > len(names) {
-		end = len(names)
-	}
+	end := min(scroll+height, len(names))
 
 	visible := names[scroll:end]
 
@@ -141,7 +134,7 @@ func (m model) View() string {
 
 func RunMaxMode() {
 	p := tea.NewProgram(initialModel())
-	if err := p.Start(); err != nil {
+	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running interactive mode:", err)
 		os.Exit(1)
 	}
