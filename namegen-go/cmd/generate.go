@@ -2,16 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"math/rand"
 	"os"
 	"strconv"
 	"time"
-
-	"github.com/hybridjosto/namegen-go/lib"
-	"github.com/hybridjosto/namegen-go/ui"
-	"github.com/spf13/cobra"
 )
 
 type NameCategory struct {
@@ -25,32 +20,7 @@ type NameData struct {
 	LastNames   NameCategory `json:"last_names"`
 }
 
-var (
-	gender string
-
-	generateCmd = &cobra.Command{
-		Use:   "generate",
-		Short: "Generate a random name",
-		Run: func(cmd *cobra.Command, args []string) {
-			if gender != "" {
-				// Minimal mode
-				name := lib.GenerateName(gender)
-				fmt.Println(name)
-				return
-			}
-
-			// Max mode — interactive UI placeholder
-			ui.RunMaxMode()
-			// runMaxMode() would be called here if you set it up with Bubble Tea
-		},
-	}
-)
-
-func init() {
-	rootCmd.AddCommand(generateCmd)
-
-	generateCmd.Flags().StringVarP(&gender, "gender", "g", "", "Gender to generate name for (male or female)")
-}
+var gender string
 
 func generateName(gender string) string {
 	data, err := os.ReadFile("name-options.json")
